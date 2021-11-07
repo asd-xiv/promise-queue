@@ -1,0 +1,98 @@
+version: 2.1
+
+executors:
+  node-lts:
+    docker:
+      - image: circleci/node:lts
+
+#
+# Jobs - https://circleci.com/docs/2.0/configuration-reference/#jobs
+#
+# Groups of comands used in one or more Workflows
+#
+# - Keep GLOBAL variable usage at a minimum
+# - Prioritize `parameters` usage
+#
+
+jobs:
+  setup:
+    executor: node-lts
+    working_directory: ~/tpl-node
+    steps:
+      - checkout
+      - run:
+          name: "[npm] Install packages"
+          command: "npm run setup"
+      - save_cache:
+          paths: [ node_modules ]
+          key: tpl-node-{{ checksum "package-lock.json" }}
+
+  test:
+    executor: node-lts
+    working_directory: ~/tpl-node
+    steps:
+      - checkout
+      - restore_cache:
+          key: tpl-node-{{ checksum "package-lock.json" }}
+      - run:
+          name: "[eslint,markdownlint]: Lint"
+          command: "npm run lint"
+      - run:
+          name: "[tsc]: Typecheck"
+          command: "npm run typecheck"
+      - run:
+          name: "[tape]: Test"
+          command: "npm run test"
+
+  coverage:
+    executor: node-lts
+    working_directory: ~/tpl-node
+    steps:
+      - checkout
+      - restore_cache:
+          key: tpl-node-{{ checksum "package-lock.json" }}
+      - run:
+          name: "[c8,coveralls]: Coveralls"
+          command: "npm run coverage"
+
+  publish:
+    executor: node-lts
+    working_directory: ~/tpl-node
+    steps:
+      - checkout
+      - restore_cache:
+          key: tpl-node-{{ checksum "package-lock.json" }}
+      - run:
+          name: "[semantic-release]: Publish package to npm"
+          command: "npm run publish"
+
+#
+# Workflows - https://circleci.com/docs/2.0/workflows/
+#
+# - Treat workflows as piping commands (cmd1 -p1 lorem | cmd2 | ... | cmdN) or
+#   function composition
+# - Use/set GLOBAL variables if they are used in more than 2 jobs
+#
+
+workflows:
+  npm_publish:
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only: [ master ]
+      - test:
+          filters:
+            branches:
+              only: [ master ]
+          requires: [ setup ]
+      - coverage:
+          filters:
+            branches:
+              only: [ master ]
+          requires: [ test ]
+      - publish:
+          filters:
+            branches:
+              only: [ master ]
+          requires: [ coverage ]

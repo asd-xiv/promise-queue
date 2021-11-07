@@ -1,0 +1,20 @@
+{
+  "minify": false,
+  "sourceMaps": true,
+  "env": {
+    "target": "node",
+    "mode": "entry",
+    "coreJs": 3
+  },
+  "module": {
+    "type": "es6"
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": false,
+      "dynamicImport": false
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "extends": ["@asd14/eslint-config/targets/node-ts"],
+
+  "rules": {
+  },
+
+  "settings": {
+    // Recommended if you use eslint_d
+    "import/cache": {
+      "lifetime": 5
+    },
+
+    "import/resolver": {
+      "node": {
+        "extensions": [".js"]
+      }
+    }
+  }
+}
