@@ -3,18 +3,14 @@
   "extends": ["@asd14/eslint-config/targets/node-ts"],
 
   "rules": {
+    "promise/avoid-new": "off",
+    "unicorn/no-useless-undefined": "off"
   },
 
   "settings": {
     // Recommended if you use eslint_d
     "import/cache": {
       "lifetime": 5
-    },
-
-    "import/resolver": {
-      "node": {
-        "extensions": [".js"]
-      }
     }
   }
 }

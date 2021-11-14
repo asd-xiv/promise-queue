@@ -17,7 +17,7 @@ executors:
 jobs:
   setup:
     executor: node-lts
-    working_directory: ~/tpl-node
+    working_directory: ~/promise-queue
     steps:
       - checkout
       - run:
@@ -25,43 +25,43 @@ jobs:
           command: "npm run setup"
       - save_cache:
           paths: [ node_modules ]
-          key: tpl-node-{{ checksum "package-lock.json" }}
+          key: promise-queue-{{ checksum "package-lock.json" }}
 
   test:
     executor: node-lts
-    working_directory: ~/tpl-node
+    working_directory: ~/promise-queue
     steps:
       - checkout
       - restore_cache:
-          key: tpl-node-{{ checksum "package-lock.json" }}
+          key: promise-queue-{{ checksum "package-lock.json" }}
       - run:
           name: "[eslint,markdownlint]: Lint"
           command: "npm run lint"
-      - run:
-          name: "[tsc]: Typecheck"
-          command: "npm run typecheck"
+      # - run:
+      #     name: "[tsc]: Typecheck"
+      #     command: "npm run typecheck"
       - run:
           name: "[tape]: Test"
           command: "npm run test"
 
   coverage:
     executor: node-lts
-    working_directory: ~/tpl-node
+    working_directory: ~/promise-queue
     steps:
       - checkout
       - restore_cache:
-          key: tpl-node-{{ checksum "package-lock.json" }}
+          key: promise-queue-{{ checksum "package-lock.json" }}
       - run:
           name: "[c8,coveralls]: Coveralls"
           command: "npm run coverage"
 
   publish:
     executor: node-lts
-    working_directory: ~/tpl-node
+    working_directory: ~/promise-queue
     steps:
       - checkout
       - restore_cache:
-          key: tpl-node-{{ checksum "package-lock.json" }}
+          key: promise-queue-{{ checksum "package-lock.json" }}
       - run:
           name: "[semantic-release]: Publish package to npm"
           command: "npm run publish"

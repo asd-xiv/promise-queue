@@ -1,7 +1,7 @@
 {
-  "name": "library-stack-node",
+  "name": "@asd14/promise-queue",
   "version": "0.0.1",
-  "description": "Library Stack for Node.js projects",
+  "description": "A self-popping promise based queue",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
@@ -10,33 +10,24 @@
   "files": [
     "/dist"
   ],
-  "homepage": "https://github.com/andreidmt/tpl-node",
+  "homepage": "https://github.com/asd-xiv/promise-queue",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreidmt/tpl-node.git"
+    "url": "git+https://github.com/asd-xiv/promise-queue.git"
   },
   "bugs": {
-    "url": "https://github.com/andreidmt/tpl-node/issues"
+    "url": "https://github.com/asd-xiv/promise-queue/issues"
   },
   "author": {
     "name": "Andrei Dumitrescu",
     "url": "https://github.com/andreidmt"
   },
   "keywords": [
+    "queue",
+    "promise",
     "nodejs",
     "typescript",
-    "esm",
-    "tape",
-    "eslint",
-    "prettier",
-    "lintstaged",
-    "commitlint",
-    "markdownlint",
-    "circleci",
-    "semantic-release",
-    "coveralls",
-    "swc",
-    "c8"
+    "esm"
   ],
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
@@ -49,7 +40,7 @@
     "postupdate": "npm audit --fix",
     "----BUILD": "",
     "build.js": "swc src -d dist",
-    "build.types": "tsc --project .tscrc --emitDeclarationOnly",
+    "build.types": "tsc --emitDeclarationOnly",
     "build": "npm run build.js && npm run build.types",
     "----LINT": "",
     "lint.js-staged": "eslint --quiet",
@@ -57,10 +48,10 @@
     "lint.js": "eslint --quiet src",
     "lint.md": "markdownlint '*.md'",
     "lint": "npm run lint.js && npm run lint.md",
-    "typecheck": "tsc --project .tscrc --noEmit",
+    "typecheck": "tsc --noEmit",
     "----TEST": "",
     "pretest": "npm run build.js",
-    "test": "tape 'dist/*.test.js' 'dist/**/*.test.js' | tap-nirvana",
+    "test": "tape 'dist/test/*.js' | tap-nirvana",
     "tdd": "nodemon --watch src --ext js,ts,json --exec 'npm test'",
     "----TEST-COVERAGE": "",
     "coverage": "c8 npm test && c8 report --reporter=text-lcov | coveralls",
@@ -71,31 +62,33 @@
     "prepublish": "npm run build",
     "publish": "semantic-release"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@asd14/m": "^7.3.0"
+  },
   "devDependencies": {
-    "@asd14/eslint-config": "^6.3.0",
+    "@asd14/eslint-config": "^6.6.0",
     "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^14.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@swc/cli": "^0.1.51",
-    "@swc/core": "^1.2.106",
+    "@swc/core": "^1.2.108",
     "@types/tape": "^4.13.2",
-    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
     "benny": "^3.7.1",
     "c8": "^7.10.0",
     "coveralls": "^3.1.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-no-inferred-method-name": "^2.0.0",
     "eslint-plugin-promise": "^5.1.1",
-    "eslint-plugin-unicorn": "^38.0.0",
-    "lint-staged": "^11.2.6",
+    "eslint-plugin-unicorn": "^38.0.1",
+    "lint-staged": "^12.0.2",
     "markdownlint-cli": "^0.29.0",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.15",
     "npm-check": "^5.9.2",
     "prettier": "^2.4.1",
     "semantic-release": "^18.0.0",
