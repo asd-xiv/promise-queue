@@ -51,7 +51,7 @@
     "typecheck": "tsc --noEmit",
     "----TEST": "",
     "pretest": "npm run build.js",
-    "test": "tape 'dist/test/*.js' | tap-nirvana",
+    "test": "tape 'dist/*.test.js' | tap-nirvana",
     "tdd": "nodemon --watch src --ext js,ts,json --exec 'npm test'",
     "----TEST-COVERAGE": "",
     "coverage": "c8 npm test && c8 report --reporter=text-lcov | coveralls",
@@ -93,6 +93,6 @@
     "prettier": "^2.4.1",
     "semantic-release": "^18.0.0",
     "tap-nirvana": "^1.1.0",
-    "tape": "^5.3.1"
+    "tape": "^5.3.2"
   }
 }
