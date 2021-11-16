@@ -4,11 +4,14 @@
   "functions": 100,
   "branches": 100,
   "include": [
-    "dist/**/*.js"
+    "dist/**/*.js",
+    "dist/*.js"
   ],
   "exclude": [
     "dist/**/*.test.js",
-    "dist/**/*.bench.js"
+    "dist/*.test.js",
+    "dist/**/*.bench.js",
+    "dist/*.bench.js"
   ],
   "reporter": [],
   "cache": true,
